@@ -3,7 +3,7 @@ $:.push File.expand_path("../lib", __FILE__)
 
 Gem::Specification.new do |s|
   s.name        = "landingman-binary"
-  s.version     = "0.0.2"
+  s.version     = "0.0.3"
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Matt Snider"]
   s.email       = ["matt@cleanenergyexperts.com"]
@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
   
   # The version of middleman-core your extension depends on
-  s.add_runtime_dependency("middleman-core", [">= 4.1.1"])
+  s.add_runtime_dependency("middleman-core", [">= 3.3"])
   
   # Additional dependencies
   # s.add_runtime_dependency("gem-name", "gem-version")
