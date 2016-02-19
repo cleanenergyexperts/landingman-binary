@@ -1,0 +1,40 @@
+#!/usr/bin/env ruby
+
+# Default command is server
+if ARGV[0] != 'help' && (ARGV.length < 1 || ARGV.first.include?('-'))
+  ARGV.unshift('--force-polling') unless ARGV.include?('--force-polling')
+  ARGV.unshift('server')
+end
+
+# Custom LandingMan Commands:
+# lm server
+# lm build
+# lm staging
+# lm production
+# lm init
+if ARGV[0] == 'server' then
+  ARGV.push('--force-polling') unless ARGV.include?('--force-polling')
+elsif ARGV[0] == 'build' then
+  # adjust any build parameters?
+elsif ARGV[0] == 'staging' then
+  ARGV.shift # Remove environment name
+  ARGV.unshift('-e staging')
+  ARGV.unshift('s3_sync')
+
+  puts "=== Deploying to Staging ==="
+elsif ARGV[0] == 'production' then
+  ARGV.shift # Remove environment name
+  ARGV.push('-B') unless ARGV.include?('-B')
+  ARGV.unshift('-e production')
+  ARGV.unshift('s3_sync')
+
+  puts "=== Deploying to Production ==="
+elsif ARGV[0] == 'init' then
+  # Force use of the LandingMan template
+  ARGV.push('--template=https://github.com/cleanenergyexperts/landingman-template')
+else
+  # No command found: Pass-thru to Middleman
+end
+
+# Run the command via middleman
+exec "bundle exec middleman #{ARGV.join(' ')}"
